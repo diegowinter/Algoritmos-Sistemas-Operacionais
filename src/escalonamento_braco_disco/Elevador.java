@@ -3,6 +3,10 @@ package escalonamento_braco_disco;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Algoritmo do elevador (Scan)
+ * @author Diego Winter
+ */
 public class Elevador {
 	
 	private ArrayList<Integer> requisicoes;
@@ -11,6 +15,10 @@ public class Elevador {
 		this.requisicoes = requisicoes;
 	}
 
+	/**
+	 * Executa o algoritmo.
+	 * @return A quantidade de cilindros percorridos.
+	 */
 	@SuppressWarnings("unchecked")
 	public int executar() {
 		ArrayList<Integer> requisicoesOrdenadas = (ArrayList<Integer>) requisicoes.clone();
@@ -18,11 +26,9 @@ public class Elevador {
 		int cilindrosPercorridos = 0;
 		
 		Collections.sort(requisicoesOrdenadas);
-		System.out.println(requisicoes);
-		System.out.println(requisicoesOrdenadas);
+
 		for(int i=0; i<requisicoes.size(); i++) {
 			if(requisicoesOrdenadas.get(i).equals(requisicoes.get(0))) {
-				System.out.println(i);
 				posicaoAtual = i;
 			}
 		}

@@ -2,19 +2,24 @@ package escalonamento_braco_disco;
 
 import java.util.ArrayList;
 
+/**
+ * Algoritmo SSTF (Short Seek Time First)
+ * @author Diego Winter
+ */
 public class SSTF {
 	
 	private int ultimoCilindro;
-	//private int posicaoInicial;
 	private ArrayList<Integer> requisicoes;
 	
-	public SSTF(int ultimoCilindro, /*int posicaoInicial,*/
-			ArrayList<Integer> requisicoes) {
+	public SSTF(int ultimoCilindro, ArrayList<Integer> requisicoes) {
 		this.ultimoCilindro = ultimoCilindro;
-		//this.posicaoInicial = posicaoInicial;
 		this.requisicoes = requisicoes;
 	}
 	
+	/**
+	 * Executa o algoritmo.
+	 * @return A quantidade de cilindros percorridos.
+	 */
 	public int executar() {
 		ArrayList<Integer> requisicoesAtendidas = new ArrayList<Integer>();
 		
@@ -39,7 +44,6 @@ public class SSTF {
 			posicaoAtual = tempPosicaoAtual;
 			cilindrosPercorridos += distancia;
 			requisicoesAtendidas.add(posicaoAtual);
-			System.out.println(posicaoAtual);
 
 			if(requisicoesAtendidas.size() == requisicoes.size()) {
 				break;

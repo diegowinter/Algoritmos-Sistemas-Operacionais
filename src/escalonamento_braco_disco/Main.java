@@ -12,13 +12,9 @@ import java.util.Scanner;
 public class Main {
 	
 	public static void main(String[] args) {
-		/*
-		 * Enviar pras classes os valores separados:
-		 * Últ. cilindro / cilindro atual / array de requisições
-		 */
-		int leitura = 1;
+		
+		boolean leitura = true;
 		int ultimoCilindro = 0;
-		//int posicaoInicial = 0;
 		ArrayList<Integer> requisicoes = new ArrayList<Integer>();
 		
 		File arquivoEntrada = new File(args[0]);
@@ -26,14 +22,12 @@ public class Main {
 	        Scanner sr = new Scanner(arquivoEntrada);
 	        while (sr.hasNextLine()) {
 	        	String i = sr.next();
-	        	if(leitura == 1) {
+	        	if(leitura == true) {
 		    		ultimoCilindro = Integer.parseInt(i);
-		    	//} else if (leitura == 2) {
-		    		//posicaoInicial = Integer.parseInt(i);
+		    		leitura = false;
 		    	} else {
 		    		requisicoes.add(Integer.parseInt(i));
 		    	}
-	        	leitura++;
 	        }
 	        sr.close();
 	    } 
@@ -42,14 +36,16 @@ public class Main {
 	    }
 		
 		FCFS fcfs = new FCFS (requisicoes);
-		SSTF sstf = new SSTF (ultimoCilindro,/* posicaoInicial,*/ requisicoes);
-		//Elevador elevador = new Elevador (ultimoCilindro, /*posicaoInicial,*/ requisicoes);
+		SSTF sstf = new SSTF (ultimoCilindro, requisicoes);
+		Elevador elevador = new Elevador (requisicoes);
 		
-		exibirResultados(fcfs.executar(), sstf.executar()/*, elevador.executar()*/);
+		exibirResultados(fcfs.executar(), sstf.executar(), elevador.executar());
 	}
 	
-	private static String exibirResultados(int fcfs, int sstf/*, int elevador*/) {
-		return null;
+	private static void exibirResultados(int fcfs, int sstf, int elevador) {
+		System.out.println("FCFS " + fcfs);
+		System.out.println("SSTF " + sstf);
+		System.out.println("ELEVADOR " + elevador);
 	}
 
 }
