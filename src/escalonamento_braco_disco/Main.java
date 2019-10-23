@@ -41,14 +41,14 @@ public class Main {
 	        e.printStackTrace();
 	    }
 		
-		FCFS fcfs = new FCFS (ultimoCilindro, /*posicaoInicial,*/ requisicoes);
-		//SSTF sstf = new SSTF (ultimoCilindro,/* posicaoInicial,*/ requisicoes);
+		FCFS fcfs = new FCFS (requisicoes);
+		SSTF sstf = new SSTF (ultimoCilindro,/* posicaoInicial,*/ requisicoes);
 		//Elevador elevador = new Elevador (ultimoCilindro, /*posicaoInicial,*/ requisicoes);
 		
-		exibirResultados(fcfs.executar()/*, sstf.executar(), elevador.executar()*/);
+		exibirResultados(fcfs.executar(), sstf.executar()/*, elevador.executar()*/);
 	}
 	
-	private static String exibirResultados(int fcfs/*, int sstf, int elevador*/) {
+	private static String exibirResultados(int fcfs, int sstf/*, int elevador*/) {
 		return null;
 	}
 
