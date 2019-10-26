@@ -31,8 +31,10 @@ public class Main {
 	        e.printStackTrace();
 	    }
 		
-	    PrioridadesDinamicas pd = new PrioridadesDinamicas(processos);
-	    pd.executar();
+	    //PrioridadesDinamicas pd = new PrioridadesDinamicas(processos);
+	    Loteria loteria = new Loteria(processos);
+	    //pd.executar();
+	    loteria.executar();
 		//SSTF sstf = new SSTF (ultimoCilindro, requisicoes);
 		//Elevador elevador = new Elevador (requisicoes);
 		
