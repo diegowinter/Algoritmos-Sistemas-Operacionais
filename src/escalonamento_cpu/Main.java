@@ -32,13 +32,14 @@ public class Main {
 	    }
 		
 	    //PrioridadesDinamicas pd = new PrioridadesDinamicas(processos);
-	    Loteria loteria = new Loteria(processos);
 	    //pd.executar();
-	    loteria.executar();
-		//SSTF sstf = new SSTF (ultimoCilindro, requisicoes);
-		//Elevador elevador = new Elevador (requisicoes);
-		
-		//exibirResultados(fcfs.executar(), sstf.executar(), elevador.executar());
+	    //Loteria loteria = new Loteria(processos);
+	    //loteria.executar();
+		RoundRobin roundRobin = new RoundRobin(processos);
+		roundRobin.executar();
+	    
+	    
+	    //exibirResultados(fcfs.executar(), sstf.executar(), elevador.executar());
 	}
 	
 	private static void exibirResultados(int fcfs, int sstf, int elevador) {
