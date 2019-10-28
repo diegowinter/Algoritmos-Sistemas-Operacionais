@@ -1,7 +1,14 @@
 package escalonamento_cpu;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 
+/**
+ * Algoritmo de escalonamento da CPU com prioridades dinâmicas
+ * @author Diego Winter
+ */
 public class PrioridadesDinamicas {
 	
 	ArrayList<Processo> processos = new ArrayList<Processo>();
@@ -10,14 +17,12 @@ public class PrioridadesDinamicas {
 	public PrioridadesDinamicas(ArrayList<Processo> processos) {
 		this.processos = processos;
 	}
-	
-	//@SuppressWarnings("unused")
-	public void executar() {
+
+	public String executar() {
 		for (int i=0; i<processos.size(); i++) {
 			processos.get(i).setPrioridade(5);
 		}
 		int qtdeProcessos = processos.size();
-		System.out.println(qtdeProcessos);
 		int tempoRetorno = 0;
 		int tempoResposta = 0;
 		int tempoEspera = 0;
@@ -29,21 +34,9 @@ public class PrioridadesDinamicas {
 					filaDeProcessos.add(processos.get(i));
 				}
 			}
-			
 			/*
-			for (Processo processo : filaDeProcessos) {
-				System.out.println(processo.getEstado() + " - "
-						+ processo.getDuracao() + " - "
-						+ processo.getPrioridade());
-			}
-			System.out.println("========");
-			*/
-			
-			/*
-			 *  -> Verifica se tem algum executando.
-			 *  -> Se sim, diminui seu tempo.
-			 *  -> Diminui sua prioridade.
-			 *  -> Verifica se é o seu fim.
+			 *  Verifica se tem algum executando. Se sim, diminui seu tempo.
+			 *  Diminui sua prioridade. Verifica se é o seu fim.
 			 */
 			for(int i=0; i<filaDeProcessos.size(); i++) {
 				if(filaDeProcessos.get(i).getEstado() == 1) {
@@ -53,8 +46,6 @@ public class PrioridadesDinamicas {
 						tempoRetorno += tempo - filaDeProcessos.get(i).getInstante();
 						tempoResposta += filaDeProcessos.get(i).getPrimeiraExecucao() - filaDeProcessos.get(i).getInstante();
 						tempoEspera += filaDeProcessos.get(i).getTempoEmEspera();
-						System.out.println("Nasci: " + filaDeProcessos.get(i).getInstante()
-								+ " e morri: " + tempo);
 						filaDeProcessos.remove(i);
 					} else {
 						filaDeProcessos.get(i).setEstado(2);
@@ -62,14 +53,23 @@ public class PrioridadesDinamicas {
 				}
 			}
 			
+			/*
+			 * Fim do algoritmo com apuração dos resultados
+			 */
 			if(filaDeProcessos.size() == 0) {
-				float trtm = (float)tempoRetorno / (float)qtdeProcessos;
-				float trsm = (float)tempoResposta / (float)qtdeProcessos;
-				float tesm = (float)tempoEspera / (float)qtdeProcessos;
-				System.out.println("TRetM = " + trtm);
-				System.out.println("TResM = " + trsm);
-				System.out.println("TEspM = " + tesm);
-				break;
+				float tempoRetornoMedio = (float)tempoRetorno / (float)qtdeProcessos;
+				float tempoRespostaMedio = (float)tempoResposta / (float)qtdeProcessos;
+				float tempoEsperaMedio = (float)tempoEspera / (float)qtdeProcessos;
+				
+				DecimalFormatSymbols separador = new DecimalFormatSymbols(Locale.GERMAN);
+				separador.setDecimalSeparator('.');
+				DecimalFormat decimalFormat = new DecimalFormat("#.##", separador);
+
+			    String resultado = decimalFormat.format(tempoRetornoMedio) + " "
+			    		+ decimalFormat.format(tempoRespostaMedio) + " "
+			    		+ decimalFormat.format(tempoEsperaMedio);
+
+				return resultado;
 			}
 
 			novoProcesso = escolherProcesso(tempo);
@@ -94,15 +94,12 @@ public class PrioridadesDinamicas {
 			}
 			
 			tempo++;
-			
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 	
+	/*
+	 * Escolhe o próximo processo a ser executado
+	 */
 	public int escolherProcesso(int tempo) {
 		int posMaior = 0;
 		int prioridadeMaior = filaDeProcessos.get(0).getPrioridade();

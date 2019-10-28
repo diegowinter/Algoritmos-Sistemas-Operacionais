@@ -1,8 +1,15 @@
 package escalonamento_cpu;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
+/**
+ * Algoritmo de escalonamento de cpu da loteria
+ * @author Diego Winter
+ */
 public class Loteria {
 	
 	ArrayList<Processo> processos = new ArrayList<Processo>();
@@ -13,7 +20,7 @@ public class Loteria {
 		this.processos = processos;
 	}
 	
-	public void executar() {
+	public String executar() {
 		Random random = new Random();
 		int tempo = 0;
 		int qtdeProcessos = processos.size();
@@ -27,13 +34,6 @@ public class Loteria {
 					filaDeProcessos.add(processos.get(i));
 				}
 			}
-			
-			for (Processo processo : filaDeProcessos) {
-				System.out.println(processo.getEstado() + " - "
-						+ processo.getDuracao() + " - "
-						+ processo.getPrioridade());
-			}
-			System.out.println("=========");
 			
 			int sorteio = random.nextInt(filaDeProcessos.size());
 			if(!finalizados.contains(sorteio)) {
@@ -57,14 +57,19 @@ public class Loteria {
 			}
 			
 			if(filaDeProcessos.size() == finalizados.size()) {
-				System.out.println("Loteria");
-				float trtm = (float)tempoRetorno / (float)qtdeProcessos;
-				float trsm = (float)tempoResposta / (float)qtdeProcessos;
-				float tesm = (float)tempoEspera / (float)qtdeProcessos;
-				System.out.println("TRetM = " + trtm);
-				System.out.println("TResM = " + trsm);
-				System.out.println("TEspM = " + tesm);
-				break;
+				float tempoRetornoMedio = (float)tempoRetorno / (float)qtdeProcessos;
+				float tempoRespostaMedio = (float)tempoResposta / (float)qtdeProcessos;
+				float tempoEsperaMedio = (float)tempoEspera / (float)qtdeProcessos;
+				
+				DecimalFormatSymbols separador = new DecimalFormatSymbols(Locale.GERMAN);
+				separador.setDecimalSeparator('.');
+				DecimalFormat decimalFormat = new DecimalFormat("#.##", separador);
+				
+			    String resultado = decimalFormat.format(tempoRetornoMedio) + " "
+			    		+ decimalFormat.format(tempoRespostaMedio) + " "
+			    		+ decimalFormat.format(tempoEsperaMedio);
+
+				return resultado;
 			}
 			
 			tempo++;
