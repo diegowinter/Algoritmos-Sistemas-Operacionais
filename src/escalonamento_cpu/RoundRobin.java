@@ -71,6 +71,7 @@ public class RoundRobin {
 				tempoResposta += filaDeProcessos.get(0).getPrimeiraExecucao()  - filaDeProcessos.get(0).getInstante();;
 				tempoEspera += filaDeProcessos.get(0).getTempoEmEspera();
 				filaDeProcessos.remove(0);
+				pendente = false;
 				removido = true;
 			}
 			
