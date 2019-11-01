@@ -68,7 +68,7 @@ public class RoundRobin {
 			// Se um processo tiver terminado, pega seus dados e o remove
 			if(filaDeProcessos.get(0).getDuracao() == 0) {
 				tempoRetorno += tempo - filaDeProcessos.get(0).getInstante();
-				tempoResposta += filaDeProcessos.get(0).getPrimeiraExecucao()  - filaDeProcessos.get(0).getInstante();;
+				tempoResposta += filaDeProcessos.get(0).getPrimeiraExecucao() - filaDeProcessos.get(0).getInstante();;
 				tempoEspera += filaDeProcessos.get(0).getTempoEmEspera();
 				filaDeProcessos.remove(0);
 				pendente = false;
