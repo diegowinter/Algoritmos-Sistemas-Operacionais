@@ -35,41 +35,43 @@ public class Loteria {
 				}
 			}
 			
-			int sorteio = random.nextInt(filaDeProcessos.size());
-			if(!finalizados.contains(sorteio)) {
-				if(filaDeProcessos.get(sorteio).getPrimeiraExecucao() == -1) {
-					filaDeProcessos.get(sorteio).setPrimeiraExecucao(tempo);
-				}
-				filaDeProcessos.get(sorteio).setDuracao(filaDeProcessos.get(sorteio).getDuracao() - 1);
-				
-				for(int i=0; i<filaDeProcessos.size(); i++) {
-					if(i != sorteio) {
-						filaDeProcessos.get(i).setTempoEmEspera(filaDeProcessos.get(i).getTempoEmEspera() + 1);
+			if(filaDeProcessos.size() > 0) {
+				int sorteio = random.nextInt(filaDeProcessos.size());
+				if(!finalizados.contains(sorteio)) {
+					if(filaDeProcessos.get(sorteio).getPrimeiraExecucao() == -1) {
+						filaDeProcessos.get(sorteio).setPrimeiraExecucao(tempo);
+					}
+					filaDeProcessos.get(sorteio).setDuracao(filaDeProcessos.get(sorteio).getDuracao() - 1);
+					
+					for(int i=0; i<filaDeProcessos.size(); i++) {
+						if(i != sorteio) {
+							filaDeProcessos.get(i).setTempoEmEspera(filaDeProcessos.get(i).getTempoEmEspera() + 1);
+						}
+					}
+					
+					if(filaDeProcessos.get(sorteio).getDuracao() == 0) {
+						finalizados.add(sorteio);
+						tempoRetorno += tempo - filaDeProcessos.get(sorteio).getInstante();
+						tempoResposta += filaDeProcessos.get(sorteio).getPrimeiraExecucao() - filaDeProcessos.get(sorteio).getInstante();
+						tempoEspera += filaDeProcessos.get(sorteio).getTempoEmEspera();
 					}
 				}
 				
-				if(filaDeProcessos.get(sorteio).getDuracao() == 0) {
-					finalizados.add(sorteio);
-					tempoRetorno += tempo - filaDeProcessos.get(sorteio).getInstante();
-					tempoResposta += filaDeProcessos.get(sorteio).getPrimeiraExecucao() - filaDeProcessos.get(sorteio).getInstante();
-					tempoEspera += filaDeProcessos.get(sorteio).getTempoEmEspera();
-				}
-			}
-			
-			if(filaDeProcessos.size() == finalizados.size()) {
-				float tempoRetornoMedio = (float)tempoRetorno / (float)qtdeProcessos;
-				float tempoRespostaMedio = (float)tempoResposta / (float)qtdeProcessos;
-				float tempoEsperaMedio = (float)tempoEspera / (float)qtdeProcessos;
-				
-				DecimalFormatSymbols separador = new DecimalFormatSymbols(Locale.GERMAN);
-				separador.setDecimalSeparator('.');
-				DecimalFormat decimalFormat = new DecimalFormat("#.##", separador);
-				
-			    String resultado = decimalFormat.format(tempoRetornoMedio) + " "
-			    		+ decimalFormat.format(tempoRespostaMedio) + " "
-			    		+ decimalFormat.format(tempoEsperaMedio);
+				if(filaDeProcessos.size() == finalizados.size()) {
+					float tempoRetornoMedio = (float)tempoRetorno / (float)qtdeProcessos;
+					float tempoRespostaMedio = (float)tempoResposta / (float)qtdeProcessos;
+					float tempoEsperaMedio = (float)tempoEspera / (float)qtdeProcessos;
+					
+					DecimalFormatSymbols separador = new DecimalFormatSymbols(Locale.GERMAN);
+					separador.setDecimalSeparator('.');
+					DecimalFormat decimalFormat = new DecimalFormat("#.##", separador);
+					
+				    String resultado = decimalFormat.format(tempoRetornoMedio) + " "
+				    		+ decimalFormat.format(tempoRespostaMedio) + " "
+				    		+ decimalFormat.format(tempoEsperaMedio);
 
-				return resultado;
+					return resultado;
+				}
 			}
 			
 			tempo++;
