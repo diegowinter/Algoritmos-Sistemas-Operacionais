@@ -17,7 +17,7 @@ public class SegundaChance {
 	
 	int faltasDePagina = 0;
 	int contReferencias = 0;
-	public void executar() {
+	public int executar() {
 
 		boolean troca = false;
 		for(int i=0; i<referencias.size(); i++) {
@@ -40,7 +40,7 @@ public class SegundaChance {
 				if(troca == false) {
 					while(true) {
 						if(quadros.get(0).getBitR() == 1) {
-							Pagina pagina = new Pagina(0, 0);
+							Pagina pagina = new Pagina(0, 0, 0);
 							pagina.setReferencia(quadros.get(0).getReferencia());
 							pagina.setBitR(0);
 							quadros.remove(0);
@@ -57,15 +57,10 @@ public class SegundaChance {
 				troca = false;	
 			}
 			
-			for (Pagina pagina : quadros) {
-				System.out.println("Quadro: " + pagina.getReferencia()
-					+ " Bit R: " + pagina.getBitR());
-			}
-			System.out.println("======================");
 			contReferencias++;
 		}
 		
-		System.out.println(faltasDePagina);
+		return faltasDePagina;
 	}
 
 }

@@ -20,7 +20,7 @@ public class Otimo {
 	int contQuadros = 0;
 	int faltaDePagina = 0;
 	
-	public void executar() {
+	public int executar() {
 		for(int i=0; i<referencias.size(); i++) {
 			if(quadros.size() < quadrosDisponiveis) {
 				faltaDePagina++;
@@ -53,7 +53,7 @@ public class Otimo {
 			}
 		}
 		
-		System.out.println(faltaDePagina);
+		return faltaDePagina;
 	}
 
 }
